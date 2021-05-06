@@ -35,6 +35,16 @@ const ListItemDataLabel = styled.span`
 
 type ListItem = { name: string; age: number; country: string };
 
+type ListItemKey = keyof ListItem;
+
+type SortOption<T> = { label: string; value: ListItemKey };
+
+const listSortOptions: SortOption[] = [
+  { label: "Name", value: "name" },
+  { label: "Age", value: "age" },
+  { label: "Country", value: "country" }
+];
+
 function getInitialList(): ListItem[] {
   const list = [];
   for (let i = 0; i < 25; i++) {
@@ -82,7 +92,12 @@ export function SortableList() {
   return (
     <>
       <div>A Sortable List</div>
-      <SortControl data={list} onSortChange={handleSortChange} />
+      {/* <SortControl<ListItem, SortOption> */}
+      <SortControl<ListItem>
+        data={list}
+        onSortChange={handleSortChange}
+        sortOptions={listSortOptions}
+      />
       <ListWrapper>{list.map(renderListItem)}</ListWrapper>
     </>
   );
