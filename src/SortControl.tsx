@@ -1,19 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styled from "styled-components";
 
+import { SortComponentWrapper } from "./styles";
 import { compareObjectsByKey } from "./utils";
-
-const SortComponentWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const SortIconWrapper = styled.div`
-  border: 0.0625rem solid black;
-  border-radius: 0.125rem;
-  padding: 0 0.5rem;
-  margin-left: 0.5rem;
-`;
 
 export type SortDirection = "asc" | "desc";
 
@@ -94,16 +82,24 @@ export function SortControl<T>({
 
   return (
     <>
-      <div>Sort by</div>
       <SortComponentWrapper>
+        <span>Sort by</span>
         {sortOptions?.length ? (
           <select onChange={handleSortKeyChange}>
             {sortOptions.map(renderSortOptions)}
           </select>
         ) : (
-          <SortIconWrapper>(No Sort options were found)</SortIconWrapper>
+          <span>(No sort options were found)</span>
         )}
-        <SortIconWrapper>{getSortDirectionIcon()}</SortIconWrapper>
+        <button
+          title={
+            sortDirection === "asc"
+              ? `Sort by ${sortKey} in Descending order`
+              : `Sort by ${sortKey} in Ascending order`
+          }
+        >
+          {getSortDirectionIcon()}
+        </button>
       </SortComponentWrapper>
     </>
   );

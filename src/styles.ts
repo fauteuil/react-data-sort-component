@@ -28,3 +28,24 @@ export const ListItemDataWrapper = styled.div`
 export const ListItemDataLabel = styled.span`
   padding-right: 0.5rem;
 `;
+
+export const SortComponentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  button {
+    border: 0.0625rem solid black;
+    border-radius: 0.125rem;
+    padding: 0 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+
+  select {
+    padding: 0.25rem;
+  }
+
+  span {
+    padding: 0.25rem;
+  }
+`;
