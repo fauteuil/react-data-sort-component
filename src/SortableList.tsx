@@ -35,11 +35,7 @@ const ListItemDataLabel = styled.span`
 
 type ListItem = { name: string; age: number; country: string };
 
-type ListItemKey = keyof ListItem;
-
-type SortOption<T> = { label: string; value: ListItemKey };
-
-const listSortOptions: SortOption[] = [
+const listSortOptions = [
   { label: "Name", value: "name" },
   { label: "Age", value: "age" },
   { label: "Country", value: "country" }
@@ -57,19 +53,32 @@ function getInitialList(): ListItem[] {
   return list;
 }
 
-function renderListItem({ name, age, country }: ListItem) {
+function renderHeader() {
   return (
     <ListItemWrapper>
       <ListItemDataWrapper>
         <ListItemDataLabel>name: </ListItemDataLabel>
-        <span>{name}</span>
       </ListItemDataWrapper>
       <ListItemDataWrapper>
         <ListItemDataLabel>age: </ListItemDataLabel>
-        <span>{age}</span>
       </ListItemDataWrapper>
       <ListItemDataWrapper>
         <ListItemDataLabel>country:</ListItemDataLabel>
+      </ListItemDataWrapper>
+    </ListItemWrapper>
+  );
+}
+
+function renderListItem({ name, age, country }: ListItem, index: number) {
+  return (
+    <ListItemWrapper key={index}>
+      <ListItemDataWrapper>
+        <span>{name}</span>
+      </ListItemDataWrapper>
+      <ListItemDataWrapper>
+        <span>{age}</span>
+      </ListItemDataWrapper>
+      <ListItemDataWrapper>
         <span>{country}</span>
       </ListItemDataWrapper>
     </ListItemWrapper>
@@ -92,12 +101,14 @@ export function SortableList() {
   return (
     <>
       <div>A Sortable List</div>
-      {/* <SortControl<ListItem, SortOption> */}
       <SortControl<ListItem>
         data={list}
         onSortChange={handleSortChange}
         sortOptions={listSortOptions}
       />
+
+      {renderHeader()}
+
       <ListWrapper>{list.map(renderListItem)}</ListWrapper>
     </>
   );
