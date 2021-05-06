@@ -65,9 +65,17 @@ export function SortControl<T>({
     setSortChanged(true);
   };
 
-  function getSortDirectionIcon() {
+  function renderSortDirectionIcon() {
     const directionIcon = sortDirection === "asc" ? "v" : "^";
-    return <span onClick={handleDirectionToggle}>{directionIcon}</span>;
+    const buttonTitle =
+      sortDirection === "asc"
+        ? `Sort by ${sortKey} in Descending order`
+        : `Sort by ${sortKey} in Ascending order`;
+    return (
+      <button title={buttonTitle} onClick={handleDirectionToggle}>
+        {directionIcon}
+      </button>
+    );
   }
 
   function renderSortOptions({ label, value }: SortOption<T>, index: number) {
@@ -91,15 +99,7 @@ export function SortControl<T>({
         ) : (
           <span>(No sort options were found)</span>
         )}
-        <button
-          title={
-            sortDirection === "asc"
-              ? `Sort by ${sortKey} in Descending order`
-              : `Sort by ${sortKey} in Ascending order`
-          }
-        >
-          {getSortDirectionIcon()}
-        </button>
+        {renderSortDirectionIcon()}
       </SortComponentWrapper>
     </>
   );

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { ListItem } from "./types";
-import { getInitialList } from "./data";
 import { SortControl } from "./SortControl";
 
 import {
@@ -54,7 +53,7 @@ export interface SortableListProps {
 }
 
 export function SortableList({ data }: SortableListProps) {
-  const [list, setList] = useState(getInitialList());
+  const [list, setList] = useState(data);
 
   /**
    * Callback for the SortControl to update state and restart component rendering.
