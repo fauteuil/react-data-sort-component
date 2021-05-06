@@ -11,19 +11,19 @@ const SortIconWrapper = styled.div`
   border-radius: 0.125rem;
 `;
 
-export interface SortSelectProps {
+export interface SortControlProps {
   data: any[];
   handleSortDirectionChange(): void;
   handleSortKeyChange(): void;
   sortOptions: { label: string; value: string }[];
 }
 
-export function SortSelect({
+export function SortControl({
   data,
   handleSortDirectionChange,
   handleSortKeyChange,
   sortOptions
-}: SortSelectProps) {
+}: SortControlProps) {
   // Local state
   const [sortDirection, setSortDirection] = useState();
   const [sortKey, setSortKey] = useState();

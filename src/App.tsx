@@ -1,10 +1,10 @@
 import React from "react";
-import { List } from "./List";
+import { SortableList } from "./SortableList";
 
 export default function App() {
   return (
     <div className="App">
-      <List />
+      <SortableList />
     </div>
   );
 }
