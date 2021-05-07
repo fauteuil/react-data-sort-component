@@ -48,6 +48,10 @@ function renderListItem({ name, age, country }: ListItem, index: number) {
   );
 }
 
+function renderList(list: ListItem[]) {
+  return <ListWrapper>{list.map(renderListItem)}</ListWrapper>;
+}
+
 export interface SortableListProps {
   data: ListItem[];
 }
@@ -65,16 +69,13 @@ export function SortableList({ data }: SortableListProps) {
 
   return (
     <>
-      <div>A Sortable List</div>
       <SortControl<ListItem>
         data={list}
         onSortChange={handleSortChange}
         sortOptions={listSortOptions}
       />
-
       {renderHeader()}
-
-      <ListWrapper>{list.map(renderListItem)}</ListWrapper>
+      {renderList(list)}
     </>
   );
 }

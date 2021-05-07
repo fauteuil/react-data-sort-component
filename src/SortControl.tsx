@@ -1,20 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React from "react";
+
+import { useSort, SortOption } from "./useSort";
 
 import { SortComponentWrapper } from "./styles";
-import { compareObjectsByKey } from "./utils";
-
-export type SortDirection = "asc" | "desc";
-
-export type ItemKey<T> = keyof T;
-
-/**
- * Mapped type to convert a supplied generic list item type `T`
- * a label / value pair for use in a select control.
- */
-export type SortOption<T> = {
-  label: T[ItemKey<T>];
-  value: ItemKey<T>;
-};
 
 export interface SortControlProps<T> {
   data: T[];
@@ -28,42 +16,38 @@ export interface SortControlProps<T> {
  * `T` - data type
  * @param param0 props: SortControlProps
  */
-export function SortControl<T>({
-  data,
-  onSortChange,
-  sortOptions
-}: SortControlProps<T>) {
-  // Local state
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-  const initialSortKey = sortOptions[0].value as ItemKey<T>;
-  const [sortKey, setSortKey] = useState<ItemKey<T>>(initialSortKey);
-  const [sortChanged, setSortChanged] = useState<boolean>(true);
+export function SortControl<T>(props: SortControlProps<T>) {
+  const { sortOptions } = props;
 
-  // Execute the sort and callback when local state has changed.
-  useEffect(() => {
-    // Update data
-    data.sort(compareObjectsByKey(sortKey, sortDirection === "asc"));
+  // Pass props to the custom sort hook to get sort functionality.
+  const {
+    handleDirectionToggle,
+    handleSortKeyChange,
+    sortDirection,
+    sortKey
+  } = useSort(props);
 
-    // Execute callback when the change flag has been set to true
-    if (sortChanged === true && onSortChange) {
-      onSortChange([...data]);
-      setSortChanged(false);
-    }
-  }, [data, onSortChange, sortChanged, sortDirection, sortKey]);
+  function renderSortOptions({ label, value }: SortOption<T>, index: number) {
+    const optionTitle = `Sort by ${label} (${value})`;
+    return (
+      <option
+        key={index}
+        label={`${label}`}
+        title={optionTitle}
+        value={value.toString()}
+      />
+    );
+  }
 
-  // Change handlers
-  const handleSortKeyChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newSortKey = event.target.value as ItemKey<T>;
-    if (sortKey !== newSortKey) {
-      setSortChanged(true);
-      setSortKey(newSortKey);
-    }
-  };
-
-  const handleDirectionToggle = () => {
-    setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    setSortChanged(true);
-  };
+  function renderSortOptionSelect() {
+    return sortOptions?.length ? (
+      <select onChange={handleSortKeyChange}>
+        {sortOptions.map(renderSortOptions)}
+      </select>
+    ) : (
+      <span>(No sort options were found)</span>
+    );
+  }
 
   function renderSortDirectionIcon() {
     const directionIcon = sortDirection === "asc" ? "v" : "^";
@@ -78,27 +62,11 @@ export function SortControl<T>({
     );
   }
 
-  function renderSortOptions({ label, value }: SortOption<T>, index: number) {
-    return (
-      <option
-        key={index}
-        label={`${label} (${value})`}
-        value={value.toString()}
-      />
-    );
-  }
-
   return (
     <>
       <SortComponentWrapper>
         <span>Sort by</span>
-        {sortOptions?.length ? (
-          <select onChange={handleSortKeyChange}>
-            {sortOptions.map(renderSortOptions)}
-          </select>
-        ) : (
-          <span>(No sort options were found)</span>
-        )}
+        {renderSortOptionSelect()}
         {renderSortDirectionIcon()}
       </SortComponentWrapper>
     </>
