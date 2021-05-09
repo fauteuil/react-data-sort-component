@@ -31,12 +31,14 @@ export function useSort<T>({ data, onSortChange, sortOptions }: SortProps<T>) {
   // Execute the sort and callback when local state
   // or supplied props have changed.
   useEffect(() => {
+    // Create a copy before sorting, as the original array is frozen in strict mode.
+    const sortedData = [...data];
     // Sort the data if the `sortChanged` flag has been set to true.
-    if (sortChanged === true) {
-      data.sort(compareObjectsByKey(sortKey, sortDirection === "asc"));
+    if (sortChanged === true && sortedData?.length) {
+      sortedData.sort(compareObjectsByKey(sortKey, sortDirection === "asc"));
 
       if (onSortChange) {
-        onSortChange([...data]);
+        onSortChange(sortedData);
       }
 
       // Reset the `sortChanged` flag.

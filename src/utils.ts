@@ -2,7 +2,7 @@
  * Generic typed comparison fn for use with `Array.sort`
  * This is passed as the comparison function with
  * the following syntax:
- * MyArray.sort(compareObjectsByKey<MyObjectType>('myObjectKey'))`
+ * MyArray.sort(compareObjectsByKey<MyObjectType>('myObjectKey', true/false)`
  * @type T
  * @param key: keyof T
  * @param ascending: boolean
