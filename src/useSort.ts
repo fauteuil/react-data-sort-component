@@ -61,6 +61,18 @@ export function useSort<T>({ data, onSortChange, sortOptions }: SortProps<T>) {
   };
 
   /**
+   * Handle directly passed options (e.g. from react-select).
+   * @param option
+   */
+  const handleKeyChange = (selectedOption: SortOption<T> | null) => {
+    const newSortKey = selectedOption?.value;
+    if (newSortKey && sortKey !== newSortKey) {
+      setSortChanged(true);
+      setSortKey(newSortKey);
+    }
+  };
+
+  /**
    * Handle changes to the sort direction.
    */
   const handleDirectionToggle = () => {
@@ -70,6 +82,7 @@ export function useSort<T>({ data, onSortChange, sortOptions }: SortProps<T>) {
 
   return {
     handleDirectionToggle,
+    handleKeyChange,
     handleSortKeyChange,
     sortDirection,
     sortKey
