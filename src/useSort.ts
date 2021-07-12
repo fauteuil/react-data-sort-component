@@ -1,19 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
+
+import { SortDirection, ItemKey, SortOption } from "./types";
 import { compareObjectsByKey } from "./utils";
-
-// Type declarations
-export type SortDirection = "asc" | "desc";
-
-export type ItemKey<T> = keyof T;
-
-/**
- * Mapped type to convert a supplied generic list item type `T`
- * a label / value pair for use in a select control.
- */
-export type SortOption<T> = {
-  label: T[ItemKey<T>];
-  value: ItemKey<T>;
-};
 
 export interface SortProps<T> {
   data: T[];

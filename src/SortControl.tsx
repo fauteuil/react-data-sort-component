@@ -1,8 +1,9 @@
 import React from "react";
 
-import { useSort, SortOption } from "./useSort";
+import { useSort } from "./useSort";
 
 import { SortComponentWrapper, SelectWrapper } from "./styles";
+import { SortOption } from "./types";
 
 export interface SortControlProps<T> {
   data: T[];
@@ -22,7 +23,6 @@ export function SortControl<T>(props: SortControlProps<T>) {
   // Pass props to the custom sort hook to get sort functionality.
   const {
     handleDirectionToggle,
-    handleKeyChange,
     handleSortKeyChange,
     sortDirection,
     sortKey
@@ -61,24 +61,6 @@ export function SortControl<T>(props: SortControlProps<T>) {
         {directionIcon}
       </button>
     );
-  }
-
-  // react-select as select control
-  // react-select setup
-  type SelectOption = { label: string; title: string; value: number };
-
-  function handleSelectChange(selectedOption: SortOption<T> | null) {
-    const selected = selectedOption;
-    console.log("selected", selected);
-    handleKeyChange(selectedOption);
-  }
-  // Render react-select
-  function getSelectOptions(options: SortOption<T>[]) {
-    return options.map<SortOption<T>>((option, index) => {
-      const { label, value } = option;
-      const title = `Sort by ${label} (${value})`;
-      return { label: label, value: value, title: title };
-    });
   }
 
   return (
