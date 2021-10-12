@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { SortDirection, ItemKey, SortOption } from './types';
 import { compareObjectsByKey } from './utils';
+import { SortDirection, ItemKey, SortOption } from './types';
 
 export interface SortProps<T> {
   data: T[];

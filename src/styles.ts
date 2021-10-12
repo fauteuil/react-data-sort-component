@@ -49,3 +49,8 @@ export const SortComponentWrapper = styled.div`
     padding: 0.25rem;
   }
 `;
+
+export const SelectWrapper = styled.div`
+  padding: 0 1rem;
+  width: 11rem;
+`;

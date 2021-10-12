@@ -1,8 +1,9 @@
 import React from "react";
 
-import { useSort, SortOption } from "./useSort";
+import { useSort } from "./useSort";
 
-import { SortComponentWrapper } from "./styles";
+import { SortComponentWrapper, SelectWrapper } from "./styles";
+import { SortOption } from "./types";
 
 export interface SortControlProps<T> {
   data: T[];
@@ -67,6 +68,7 @@ export function SortControl<T>(props: SortControlProps<T>) {
       <SortComponentWrapper>
         <span>Sort by</span>
         {renderSortOptionSelect()}
+        <span> Order by</span>
         {renderSortDirectionIcon()}
       </SortComponentWrapper>
     </>
