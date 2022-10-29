@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { ListItem } from "./types";
 import { SortControl } from "./SortControl";
@@ -63,9 +63,9 @@ export function SortableList({ data }: SortableListProps) {
    * Callback for the SortControl to update state and restart component rendering.
    * @param data: ListItem[]
    */
-  function handleSortChange(data: ListItem[]) {
+  const handleSortChange = useCallback((data: ListItem[]) => {
     setList(data);
-  }
+  }, []);
 
   return (
     <>
