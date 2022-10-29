@@ -15,6 +15,9 @@ export function useSort<T>({ data, onSortChange, sortOptions }: SortProps<T>) {
   const initialSortKey = sortOptions[0].value as ItemKey<T>;
   const [sortKey, setSortKey] = useState<ItemKey<T>>(initialSortKey);
 
+  // Create a copy before sorting, as the original array is frozen in strict mode.
+  // `useMemo` prevents multiple re-renderings if the shallow-compared value
+  // of `data` hasn't changed.
   const sortedData = useMemo(() => {
     return [...data];
   }, [data]);
@@ -22,7 +25,6 @@ export function useSort<T>({ data, onSortChange, sortOptions }: SortProps<T>) {
   // Execute the sort and callback when local state
   // or supplied props have changed.
   useEffect(() => {
-    // Create a copy before sorting, as the original array is frozen in strict mode.
     if (sortedData?.length) {
       sortedData.sort(compareObjectsByKey(sortKey, sortDirection === "asc"));
 
